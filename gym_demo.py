@@ -5,7 +5,6 @@ import time
 import numpy as np
 import pygame
 import gymnasium
-import flappy_bird_gymnasium
 from stable_baselines3 import PPO
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -100,7 +99,6 @@ def obs_at_flap_time(obs, latency_frames):
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
-
 def main(args):
     print(f"Loading model: {PPO_MODEL}")
     ppo = PPO.load(PPO_MODEL, custom_objects={
