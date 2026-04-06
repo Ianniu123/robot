@@ -6,7 +6,7 @@ A robotic arm that physically plays Flappy Bird. A PPO reinforcement learning mo
 
 ## Demo Video
 
-<video src="demo.mp4" controls width="600"></video>
+<video src="./demo.mp4" controlswidth="320" height="240"></video>
 
 ---
 
