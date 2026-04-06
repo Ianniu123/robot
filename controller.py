@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from lerobot.motors.feetech import FeetechMotorsBus
 
-# --- CHECK YOUR PORT ---
 PORT = "/dev/tty.usbmodem5AAF2196261" 
 
 class RawMotor:
@@ -47,7 +46,6 @@ class RobotControllerApp:
             print("🔌 Interrogating hardware for resting positions...")
             
             for motor_name in MOTORS.keys():
-                # THE FIX: Added normalize=False to the READ command
                 pos = self.bus.read("Present_Position", motor_name, normalize=False)
                 
                 # Handle list vs integer returns
@@ -91,8 +89,14 @@ class RobotControllerApp:
             self.sliders[index] = slider
             self.value_labels[index] = val_label
 
-        self.relax_btn = ttk.Button(root, text="Disable Torque (Relax)", command=self.relax_arm)
-        self.relax_btn.pack(pady=30)
+        btn_frame = ttk.Frame(root)
+        btn_frame.pack(pady=30)
+
+        self.relax_btn = ttk.Button(btn_frame, text="Disable Torque (Relax)", command=self.relax_arm)
+        self.relax_btn.pack(side='left', padx=10)
+
+        self.torque_btn = ttk.Button(btn_frame, text="Enable Torque", command=self.enable_torque)
+        self.torque_btn.pack(side='left', padx=10)
 
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
@@ -103,6 +107,13 @@ class RobotControllerApp:
             self.bus.write("Goal_Position", motor_name, raw_val, normalize=False)
         except Exception as e:
             print(f"Write error: {repr(e)}")
+
+    def enable_torque(self):
+        try:
+            for motor_name in MOTORS.keys():
+                self.bus.write("Torque_Enable", motor_name, 1, normalize=False)
+            print("✅ Torque enabled.")
+        except: pass
 
     def relax_arm(self):
         try:
