@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['bird', 'green pipes']
+
+roboflow:
+  workspace: zhiyaoians-workspace
+  project: zhiyaoians-workspace
+  version: dataset
+  license: Private
+  url: https://app.roboflow.com/zhiyaoians-workspace/zhiyaoians-workspace/dataset
